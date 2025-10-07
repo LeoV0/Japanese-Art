@@ -1,0 +1,16 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* évite les barres de défilement */
+  background: #f5f5f5; /* même couleur que ton fond offWhite */
+}
+
+.full-screen-canvas {
+  display: block; /* enlève les espaces inline par défaut */
+  position: fixed; /* le garde plein écran */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}

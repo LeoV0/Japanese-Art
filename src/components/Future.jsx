@@ -11,9 +11,9 @@ const TechArt = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    canvas.style.cursor = "none"; // cacher le curseur natif
+    canvas.style.cursor = "none"; // cacher le curseur
 
-    // === COLORS ===
+    // Couleurs
     const colors = {
       offWhite: "#f5f5f5",
       gray: "#666666",
@@ -23,17 +23,16 @@ const TechArt = () => {
       cardBg: "#f5f5f5",
     };
 
-    // === CURSOR POSITION ===
+    // Calculer la position du curseur
     const cursor = { x: canvas.width / 2, y: canvas.height / 2 };
     window.addEventListener("mousemove", (e) => {
       cursor.x = e.clientX;
       cursor.y = e.clientY;
     });
 
-    // === CURSOR TRAIL ===
+    // Cursor Sakura
     const cursorTrail = [];
 
-    // === HEX → RGBA UTILITY ===
     function hexToRgba(hex, alpha = 1) {
       const r = parseInt(hex.slice(1, 3), 16);
       const g = parseInt(hex.slice(3, 5), 16);
@@ -41,7 +40,7 @@ const TechArt = () => {
       return `rgba(${r},${g},${b},${alpha})`;
     }
 
-    // === DRAW SAKURA ===
+    // Dessiner les sakuras
     function drawSakura(x, y, size, color1, color2, alpha = 1) {
       ctx.save();
       ctx.translate(x, y);
@@ -61,7 +60,7 @@ const TechArt = () => {
       ctx.restore();
     }
 
-    // === DRAW BACKGROUND ===
+    // Dessiner le background
     function drawBackground() {
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
       gradient.addColorStop(0, colors.offWhite);
@@ -70,7 +69,7 @@ const TechArt = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    // === GRID ===
+    // Carreaux au fond
     function drawGrid() {
       ctx.strokeStyle = colors.blue + "30";
       ctx.lineWidth = 1;
@@ -95,7 +94,7 @@ const TechArt = () => {
       }
     }
 
-    // === TOKYO TEXT ===
+    // TOKYO
     function drawTokyoText() {
       ctx.save();
       ctx.translate(100, 120);
@@ -115,7 +114,6 @@ const TechArt = () => {
       ctx.restore();
     }
 
-    // === RANDOM JAPANESE CHARACTERS ===
     const japaneseChars = [
       "夢",
       "愛",
@@ -139,7 +137,6 @@ const TechArt = () => {
       randomWords.forEach(({ text, x, y }) => ctx.fillText(text, x, y));
     }
 
-    // === IMAGES ===
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src =
@@ -177,7 +174,6 @@ const TechArt = () => {
       ctx.restore();
     }
 
-    // === STARS ===
     const stars = Array.from({ length: 100 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -200,24 +196,37 @@ const TechArt = () => {
       ctx.restore();
     }
 
-    // === CENTRAL TEXT "JAPANESE ART" ===
+    // Japanese Art
     function drawCentralText() {
       ctx.save();
-      ctx.font = "bold 80px Arial, sans-serif";
+      ctx.font = "italic bold 80px Arial, sans-serif";
       ctx.lineWidth = 4;
       ctx.strokeStyle = colors.blue;
       ctx.shadowColor = colors.blue;
       ctx.shadowBlur = 30;
 
-      const text = "JAPANESE ART";
-      const x = canvas.width * 0.6;
-      const y = canvas.height / 2;
-      ctx.strokeText(text, x, y);
+      const x = canvas.width * 0.95;
+      const y = canvas.height / 2 + 150;
+
+      // Texte en vertical
+      const japaneseText = "日本のアート";
+      ctx.font = "bold 50px Arial, sans-serif";
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = colors.blue;
+      ctx.shadowColor = colors.blue;
+      ctx.shadowBlur = 20;
+
+      let charY = y;
+      const spacing = 55;
+      for (let i = 0; i < japaneseText.length; i++) {
+        ctx.strokeText(japaneseText[i], x, charY);
+        charY += spacing;
+      }
 
       ctx.restore();
     }
 
-    // === CURSOR SAKURA ===
+    // Sakura curseur
     function drawCursorSakura() {
       drawSakura(
         cursor.x,
@@ -261,7 +270,159 @@ const TechArt = () => {
       }
     });
 
-    // === ANIMATION LOOP ===
+    const japaneseQuotes = [
+      "花鳥風月 - Kachō fūgetsu (Beauté de la nature et des saisons)",
+      "一期一会 - Ichigo ichie (Chaque rencontre est unique)",
+      "七転び八起き - Nanakorobi yaoki (Tomber sept fois, se relever huit fois)",
+    ];
+
+    const glitchColors = ["#FF4A9E", "#4AFFEF", "#FFD700"];
+    let glitchActive = false;
+
+    // toutes les 5 secondes le glitch s'active
+    setInterval(() => {
+      glitchActive = true;
+      setTimeout(() => (glitchActive = false), 300);
+    }, 5000);
+
+    function drawJapaneseQuotes() {
+      const quotePositions = [
+        { x: 50, y: 320 }, // sous "TOKYO"
+        { x: canvas.width / 2 + 270, y: canvas.height / 2 + 30 }, // à droite de l'image centrale
+        { x: 50, y: canvas.height - 90 }, // bas à gauche (ancienne position)
+      ];
+
+      japaneseQuotes.forEach((quote, index) => {
+        const { x, y } = quotePositions[index];
+        ctx.font = "bold 22px Arial, sans-serif";
+        ctx.lineWidth = 2;
+
+        ctx.strokeStyle = colors.blue;
+        ctx.shadowBlur = 0;
+        ctx.strokeText(quote, x, y);
+
+        if (glitchActive) {
+          for (let i = 0; i < 2; i++) {
+            const offsetX = Math.random() * 2 - 1;
+            const offsetY = Math.random() * 2 - 1;
+            const color =
+              glitchColors[Math.floor(Math.random() * glitchColors.length)];
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 0.6;
+            ctx.shadowBlur = 2;
+            ctx.shadowColor = color;
+            ctx.strokeText(quote, x + offsetX, y + offsetY);
+            ctx.globalAlpha = 1;
+          }
+        }
+      });
+    }
+
+    // Matrixe Kanji
+    const matrixChars = [
+      "夢",
+      "愛",
+      "風",
+      "光",
+      "心",
+      "道",
+      "力",
+      "星",
+      "海",
+      "山",
+      "1",
+      "0",
+      "7",
+    ];
+    const matrixCols = [];
+    const matrixColCount = 8;
+    const matrixXStart = canvas.width * 0.45;
+    const matrixXSpacing = 30;
+
+    // Initialisation des colonnes
+    for (let i = 0; i < matrixColCount; i++) {
+      const colX = matrixXStart + i * matrixXSpacing;
+      matrixCols.push({
+        x: colX,
+        yPositions: Array.from({ length: 10 }, () => ({
+          y: Math.random() * -400, // ← commence plus haut qu’avant
+          char: matrixChars[Math.floor(Math.random() * matrixChars.length)],
+        })),
+        speed: 0.3 + Math.random() * 0.2,
+      });
+    }
+
+    function drawMatrixEffect() {
+      ctx.save();
+      ctx.font = "bold 20px Arial, sans-serif";
+      ctx.fillStyle = "#4a9eff40";
+      ctx.shadowBlur = 0;
+
+      matrixCols.forEach((col) => {
+        col.yPositions.forEach((item) => {
+          ctx.fillText(item.char, col.x, item.y);
+          item.y += col.speed;
+
+          // ← limite plus basse et respawn plus haut
+          if (item.y > canvas.height + 100) {
+            item.y = -100 - Math.random() * 200; // remonte plus haut
+            item.char =
+              matrixChars[Math.floor(Math.random() * matrixChars.length)];
+          }
+        });
+      });
+
+      ctx.restore();
+    }
+
+    // === JAPANESE DIGITAL CLOCK ===
+    const daysJP = [
+      "日曜日",
+      "月曜日",
+      "火曜日",
+      "水曜日",
+      "木曜日",
+      "金曜日",
+      "土曜日",
+    ];
+
+    function drawJapaneseClock() {
+      const now = new Date();
+      const day = daysJP[now.getDay()];
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+
+      const timeString = `${hours}:${minutes}:${seconds}`;
+
+      ctx.save();
+      ctx.textAlign = "right";
+      ctx.shadowColor = colors.blue;
+      ctx.shadowBlur = 20;
+      ctx.strokeStyle = colors.blue;
+      ctx.fillStyle = hexToRgba(colors.blue, 0.9);
+
+      // Jour (kanji)
+      ctx.font = "bold 28px 'Arial', sans-serif";
+      ctx.fillText(day, canvas.width - 20, 40);
+
+      // Heure numérique
+      ctx.font = "bold 40px 'Arial', sans-serif";
+      ctx.fillText(timeString, canvas.width - 20, 80);
+
+      ctx.restore();
+    }
+
+    function drawCopyright() {
+      ctx.save();
+      ctx.font = "bold 12px Arial, sans-serif";
+      ctx.fillStyle = colors.gray;
+      ctx.textAlign = "left";
+      ctx.fillText("Copyright Léo - 2025", 20, canvas.height - 20);
+      ctx.restore();
+    }
+
+    // Animation
     function animate() {
       drawBackground();
       drawGrid();
@@ -272,11 +433,15 @@ const TechArt = () => {
       drawStars();
       drawCentralText();
       drawCursorSakura();
+      drawJapaneseQuotes();
+      drawMatrixEffect();
+      drawJapaneseClock();
+      drawCopyright();
       requestAnimationFrame(animate);
     }
     animate();
 
-    // === RESIZE HANDLER ===
+    // Resize du canvas
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;

@@ -375,44 +375,6 @@ const TechArt = () => {
       ctx.restore();
     }
 
-    // === JAPANESE DIGITAL CLOCK ===
-    const daysJP = [
-      "日曜日",
-      "月曜日",
-      "火曜日",
-      "水曜日",
-      "木曜日",
-      "金曜日",
-      "土曜日",
-    ];
-
-    function drawJapaneseClock() {
-      const now = new Date();
-      const day = daysJP[now.getDay()];
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-
-      const timeString = `${hours}:${minutes}:${seconds}`;
-
-      ctx.save();
-      ctx.textAlign = "right";
-      ctx.shadowColor = colors.blue;
-      ctx.shadowBlur = 20;
-      ctx.strokeStyle = colors.blue;
-      ctx.fillStyle = hexToRgba(colors.blue, 0.9);
-
-      // Jour (kanji)
-      ctx.font = "bold 28px 'Arial', sans-serif";
-      ctx.fillText(day, canvas.width - 20, 40);
-
-      // Heure numérique
-      ctx.font = "bold 40px 'Arial', sans-serif";
-      ctx.fillText(timeString, canvas.width - 20, 80);
-
-      ctx.restore();
-    }
-
     function drawCopyright() {
       ctx.save();
       ctx.font = "bold 12px Arial, sans-serif";
@@ -435,7 +397,6 @@ const TechArt = () => {
       drawCursorSakura();
       drawJapaneseQuotes();
       drawMatrixEffect();
-      drawJapaneseClock();
       drawCopyright();
       requestAnimationFrame(animate);
     }

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const TechArt = () => {
+const JapaneseArt = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -414,4 +414,4 @@ const TechArt = () => {
   return <canvas ref={canvasRef} className="full-screen-canvas" />;
 };
 
-export default TechArt;
+export default JapaneseArt;

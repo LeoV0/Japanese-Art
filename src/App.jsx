@@ -1,10 +1,10 @@
 import "./App.css";
-import TechArt from "./components/Future";
+import JapaneseArt from "./components/JapaneseArt";
 
 function App() {
   return (
     <>
-      <TechArt />
+      <JapaneseArt />
     </>
   );
 }

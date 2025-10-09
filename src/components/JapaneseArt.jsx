@@ -493,7 +493,7 @@ const JapaneseArt = () => {
       ctx.font = "bold 12px Arial, sans-serif";
       ctx.fillStyle = colors.gray;
       ctx.textAlign = "left";
-      ctx.fillText("© Léo - 2025", 20, canvas.height - 20);
+      ctx.fillText("Copyright Léo - 2025", 20, canvas.height - 20);
       ctx.restore();
     }
 
